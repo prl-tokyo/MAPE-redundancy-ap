@@ -1,10 +1,13 @@
 package jp.ac.nii.prl.mape.redundancy.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +39,14 @@ public class RedundancyController {
 				.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(redundancyView.getId()).toUri());
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/{redundancyViewId}", method=RequestMethod.GET)
+	public RedundancyView getRedundancyView(@PathVariable Long redundancyViewId) {
+		Optional<RedundancyView> redundancyView = redundancyViewService.findOne(redundancyViewId);
+		if (redundancyView.isPresent())
+			return redundancyView.get();
+		throw new RedundancyViewNotFoundException(String.format("RedundancyView %s not found", redundancyViewId));
 	}
 
 }
