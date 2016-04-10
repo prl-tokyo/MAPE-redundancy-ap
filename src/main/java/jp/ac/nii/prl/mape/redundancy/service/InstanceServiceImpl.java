@@ -18,6 +18,7 @@ public class InstanceServiceImpl implements InstanceService {
 	/* (non-Javadoc)
 	 * @see jp.ac.nii.prl.mape.redundancy.service.InstanceService#save(jp.ac.nii.prl.mape.redundancy.model.Instance)
 	 */
+	@Override
 	public void save(Instance instance) {
 		instanceRepository.save(instance);
 	}
@@ -25,10 +26,12 @@ public class InstanceServiceImpl implements InstanceService {
 	/* (non-Javadoc)
 	 * @see jp.ac.nii.prl.mape.redundancy.service.InstanceService#findOne(java.lang.Long)
 	 */
+	@Override
 	public Optional<Instance> findOne(Long instanceId) {
 		return Optional.ofNullable(instanceRepository.findOne(instanceId));
 	}
 	
+	@Override
 	public Collection<Instance> findByRedundancyViewId(Long redundancyViewId) {
 		return instanceRepository.findByRedundancyViewId(redundancyViewId);
 	}
