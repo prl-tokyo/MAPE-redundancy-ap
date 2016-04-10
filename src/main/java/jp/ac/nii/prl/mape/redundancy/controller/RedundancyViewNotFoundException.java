@@ -9,5 +9,9 @@ public class RedundancyViewNotFoundException extends RestClientException {
 	public RedundancyViewNotFoundException(String msg) {
 		super(msg);
 	}
+	
+	public RedundancyViewNotFoundException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
 }
