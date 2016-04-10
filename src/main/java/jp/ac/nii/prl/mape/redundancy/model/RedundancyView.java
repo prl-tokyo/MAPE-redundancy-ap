@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,6 +20,7 @@ public class RedundancyView {
 	private Long id;
 	
 	@NotEmpty
+	@OneToMany(mappedBy="RedundancyView")
 	private Collection<Instance> instances;
 
 	public Long getId() {
