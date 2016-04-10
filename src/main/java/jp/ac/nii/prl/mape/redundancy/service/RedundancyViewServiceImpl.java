@@ -24,6 +24,8 @@ public class RedundancyViewServiceImpl implements RedundancyViewService {
 	@Override
 	public void save(RedundancyView redundancyView) {
 		redundancyViewRepository.save(redundancyView);
+		for (Instance instance:redundancyView.getInstances())
+			instanceService.save(instance);
 	}
 	
 	/* (non-Javadoc)
