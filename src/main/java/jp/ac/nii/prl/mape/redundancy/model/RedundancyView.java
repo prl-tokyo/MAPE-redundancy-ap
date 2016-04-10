@@ -20,7 +20,7 @@ public class RedundancyView {
 	private Long id;
 	
 	@NotEmpty
-	@OneToMany(mappedBy="RedundancyView")
+	@OneToMany(mappedBy="redundancyView")
 	private Collection<Instance> instances;
 
 	public Long getId() {
