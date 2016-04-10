@@ -1,5 +1,6 @@
 package jp.ac.nii.prl.mape.redundancy.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class InstanceServiceImpl implements InstanceService {
 	 */
 	public Optional<Instance> findOne(Long instanceId) {
 		return Optional.ofNullable(instanceRepository.findOne(instanceId));
+	}
+	
+	public Collection<Instance> findByRedundancyViewId(Long redundancyViewId) {
+		return instanceRepository.findByRedundancyViewId(redundancyViewId);
 	}
 
 }
