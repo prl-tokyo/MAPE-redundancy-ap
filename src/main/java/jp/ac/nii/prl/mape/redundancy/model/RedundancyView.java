@@ -38,5 +38,9 @@ public class RedundancyView {
 	public void setInstances(Collection<Instance> instances) {
 		this.instances = instances;
 	}
+
+	public void addInstance(Instance instance) {
+		instances.add(instance);
+	}
 	
 }

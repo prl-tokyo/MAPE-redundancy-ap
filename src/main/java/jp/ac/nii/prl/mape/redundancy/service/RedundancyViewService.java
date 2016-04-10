@@ -9,5 +9,7 @@ public interface RedundancyViewService {
 	void save(RedundancyView redundancyView);
 
 	Optional<RedundancyView> findOne(Long redundancyViewId);
+	
+	void analyseAndPlan(RedundancyView redundancyView);
 
 }
