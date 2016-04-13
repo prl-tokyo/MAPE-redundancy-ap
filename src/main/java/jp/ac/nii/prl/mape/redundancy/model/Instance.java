@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -25,6 +26,7 @@ public class Instance {
 	private int status;
 	
 	@ManyToOne
+	@JsonIgnore
 	private RedundancyView redundancyView;
 
 	public Long getId() {
@@ -35,6 +37,7 @@ public class Instance {
 		return instID;
 	}
 
+	@JsonBackReference
 	public RedundancyView getRedundancyView() {
 		return redundancyView;
 	}
@@ -57,5 +60,10 @@ public class Instance {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Instance ID %s(%d), status %d, in view %d", instID, id, status, redundancyView.getId());
 	}
 }

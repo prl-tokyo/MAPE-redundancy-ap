@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class RedundancyView {
@@ -31,6 +32,7 @@ public class RedundancyView {
 		this.id = id;
 	}
 
+	@JsonManagedReference
 	public Collection<Instance> getInstances() {
 		return instances;
 	}

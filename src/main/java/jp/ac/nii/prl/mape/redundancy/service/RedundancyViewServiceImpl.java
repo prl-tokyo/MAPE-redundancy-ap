@@ -1,5 +1,6 @@
 package jp.ac.nii.prl.mape.redundancy.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,9 @@ public class RedundancyViewServiceImpl implements RedundancyViewService {
 	@Override
 	public void save(RedundancyView redundancyView) {
 		redundancyViewRepository.save(redundancyView);
-		for (Instance instance:redundancyView.getInstances())
+		for (Instance instance:redundancyView.getInstances()) {
 			instanceService.save(instance);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -33,7 +35,12 @@ public class RedundancyViewServiceImpl implements RedundancyViewService {
 	 */
 	@Override
 	public Optional<RedundancyView> findOne(Long redundancyViewId) {
-		return Optional.ofNullable(redundancyViewRepository.findOne(redundancyViewId));
+		RedundancyView redundancy = redundancyViewRepository.findOne(redundancyViewId);
+		if (redundancy == null)
+			return Optional.empty();
+		Collection<Instance> instances = instanceService.findByRedundancyViewId(redundancyViewId);
+		redundancy.setInstances(instances);
+		return Optional.of(redundancy);
 	}
 
 	@Override
