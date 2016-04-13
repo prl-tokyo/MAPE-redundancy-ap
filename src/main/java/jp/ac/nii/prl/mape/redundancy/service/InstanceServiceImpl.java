@@ -48,4 +48,9 @@ public class InstanceServiceImpl implements InstanceService {
 		return instance;
 	}
 
+	@Override
+	public Collection<Instance> findAll() {
+		return instanceRepository.findAll();
+	}
+
 }

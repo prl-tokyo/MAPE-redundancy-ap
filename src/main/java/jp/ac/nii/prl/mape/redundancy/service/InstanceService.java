@@ -16,4 +16,6 @@ public interface InstanceService {
 
 	Instance createNewInstance(RedundancyView redundancyView);
 
+	Collection<Instance> findAll();
+
 }
