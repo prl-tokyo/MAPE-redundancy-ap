@@ -2,6 +2,7 @@ package jp.ac.nii.prl.mape.redundancy.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,16 +46,31 @@ public class RedundancyViewServiceImpl implements RedundancyViewService {
 
 	@Override
 	public void analyseAndPlan(RedundancyView redundancyView) {
-		if (redundancyView.getInstances().size() < 2) {// adaptation required
-			addInstance(redundancyView);
+		Collection<Instance> liveInstances = redundancyView.getInstances()
+				.stream()
+				.filter(i -> i.getStatus() != 2)
+				.collect(Collectors.toList());
+		if (liveInstances.size() < 2) {// adaptation required
+			addInstance(2 - liveInstances.size(), redundancyView);
 		}
 	}
 	
-	private void addInstance(RedundancyView redundancyView) {
-		Instance instance = instanceService.createNewInstance(redundancyView);
-		redundancyView.addInstance(instance);
-		redundancyViewRepository.save(redundancyView);
-		instanceService.save(instance);
+	private void addInstance(int number, RedundancyView redundancyView) {
+		while (number > 0) {
+			Collection<Instance> terminatingInstances = redundancyView.getInstances()
+					.stream()
+					.filter(i -> i.getStatus() == 2)
+					.collect(Collectors.toList());
+			if (!terminatingInstances.isEmpty()) {
+				terminatingInstances.iterator().next().setStatus(0);
+			} else {
+				Instance instance = instanceService.createNewInstance(redundancyView);
+				redundancyView.addInstance(instance);
+				redundancyViewRepository.save(redundancyView);
+				instanceService.save(instance);
+			}
+			number--;
+		}
 	}
 
 }
